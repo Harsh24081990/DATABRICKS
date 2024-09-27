@@ -1,5 +1,5 @@
 ## Using SQL
-##### External table --> Use `LOCATION` keyword.
+### External table --> Use `LOCATION` keyword.
 ```
 CREATE TABLE my_external_table (
       id INT,
@@ -7,7 +7,7 @@ CREATE TABLE my_external_table (
   )
   LOCATION '/mnt/mydata/external_table';
 ```
-##### Internal (Managed) table --> Don't use Location keyword. 
+### Internal (Managed) table --> Don't use Location keyword. 
 ```
 CREATE TABLE my_internal_table (
       id INT,
@@ -16,7 +16,7 @@ CREATE TABLE my_internal_table (
 ```
 ======================================================================
 ## Using PySpark
-##### External table ---> Use `.save` to save the df in a external path and register it using `DELTA LOCATION` keyword. 
+### External table ---> Use `.save` to save the df in a external path and register it using `DELTA LOCATION` keyword. 
 ```
 # Write the DataFrame to an external table
 df.write.format("delta").mode("overwrite").save(external_path)
@@ -24,7 +24,7 @@ df.write.format("delta").mode("overwrite").save(external_path)
 # Register the external table
 spark.sql(f"CREATE TABLE my_external_table USING DELTA LOCATION '{external_path}'")
 ```
-##### Internal (Managed) table  ---> use `saveAsTable()` without specifying a path to save the table internally. 
+### Internal (Managed) table  ---> use `saveAsTable()` without specifying a path to save the table internally. 
 ```
 # Write the DataFrame to a managed table
 df.write.format("delta").saveAsTable("my_internal_table")
