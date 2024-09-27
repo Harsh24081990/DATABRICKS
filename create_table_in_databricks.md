@@ -24,7 +24,7 @@ In Databricks, when you create a table using the `CREATE TABLE` statement, the d
 - **Default Behavior**: `CREATE TABLE` without `LOCATION` creates an internal (managed) table.
 - **External Table**: Use `LOCATION` to create an external table.
 
-###==========================================================================
+**###############################################################################**
 
 # Create table using pyspark
 When creating tables in Databricks using PySpark syntax, the default behavior regarding internal (managed) vs. external tables is similar to the SQL approach:
