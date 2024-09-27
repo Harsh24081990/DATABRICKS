@@ -1,4 +1,4 @@
-### SQL
+## Using SQL
 ##### External table
 ```
 CREATE TABLE my_external_table (
@@ -15,7 +15,7 @@ CREATE TABLE my_internal_table (
   );
 ```
 ======================================================================
-### PySpark
+## Using PySpark
 ##### External table
 ```
 # Write the DataFrame to an external table
