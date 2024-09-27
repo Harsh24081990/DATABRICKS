@@ -1,3 +1,34 @@
+### SQL
+##### External table
+```
+CREATE TABLE my_external_table (
+      id INT,
+      name STRING
+  )
+  LOCATION '/mnt/mydata/external_table';
+```
+##### Internal (Managed) table
+```
+CREATE TABLE my_internal_table (
+      id INT,
+      name STRING
+  );
+```
+======================================================================
+### PySpark
+##### External table
+```
+# Write the DataFrame to an external table
+df.write.format("delta").mode("overwrite").save(external_path)
+```
+##### Internal (Managed) table
+```
+# Write the DataFrame to a managed table
+df.write.format("delta").saveAsTable("my_internal_table")
+```
+**######################################################################**
+
+## Detailed Explaination
 # Create table using SQL
 
 In Databricks, when you create a table using the `CREATE TABLE` statement, the default behavior depends on whether you specify the `LOCATION` clause:
