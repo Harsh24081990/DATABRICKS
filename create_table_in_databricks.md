@@ -20,22 +20,15 @@ In Databricks, when you create a table using the `CREATE TABLE` statement, the d
   )
   LOCATION '/mnt/mydata/external_table';
   ```
-
 ### Summary
-
 - **Default Behavior**: `CREATE TABLE` without `LOCATION` creates an internal (managed) table.
 - **External Table**: Use `LOCATION` to create an external table.
 
-If you have further questions or need clarification on any related topic, feel free to ask!
-
-**==========================================================================**
+###==========================================================================
 
 # Create table using pyspark
-
 When creating tables in Databricks using PySpark syntax, the default behavior regarding internal (managed) vs. external tables is similar to the SQL approach:
-
 ### 1. **Creating an Internal (Managed) Table**
-
 If you create a table without specifying a `path`, it will be created as an internal (managed) table. The data is managed by Databricks, and if you drop the table, the data will also be deleted.
 
 ```python
@@ -46,11 +39,8 @@ df = spark.createDataFrame(data, ["id", "name"])
 # Write the DataFrame to a managed table
 df.write.format("delta").saveAsTable("my_internal_table")
 ```
-
 ### 2. **Creating an External Table**
-
 If you want to create an external table, you need to specify the `path` where the data will be stored. This way, the table references the data at the specified location, and dropping the table does not delete the underlying data.
-
 ```python
 # Create a Spark DataFrame
 data = [(1, "Alice"), (2, "Bob")]
@@ -65,10 +55,7 @@ df.write.format("delta").mode("overwrite").save(external_path)
 # Register the external table
 spark.sql(f"CREATE TABLE my_external_table USING DELTA LOCATION '{external_path}'")
 ```
-
 ### Summary
 
 - **Internal (Managed) Table**: Create using `saveAsTable()` without specifying a path.
 - **External Table**: Create by saving data to a specific path and registering it using SQL.
-
-This PySpark approach provides flexibility in how you manage your tables in Databricks. If you have any more questions or need further examples, feel free to ask!
