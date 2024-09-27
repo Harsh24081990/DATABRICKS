@@ -28,7 +28,7 @@ In Databricks, when you create a table using the `CREATE TABLE` statement, the d
 
 If you have further questions or need clarification on any related topic, feel free to ask!
 
-===============================================================================================================
+**==========================================================================**
 
 # Create table using pyspark
 
