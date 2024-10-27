@@ -38,3 +38,9 @@ We are here! 🥳lets finalize on total memory to be required to process 100GBs 
 - We have total of 200 executors
 
 Therefore, 400GB of total minimum memory required to process 100GB of data completely in parallel.
+
+
+## Point to Note: -
+- 400 GB minimum memory to process 100 GB of data, isn't it too much??
+- I assume this is the resouce needed to finish this 100 Gb in 1 second or less. Now if I want to finish the job in 15 mins or 30 mins The resouce configuration should be  different.
+- 
