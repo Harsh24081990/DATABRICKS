@@ -1,4 +1,4 @@
-## Unity Catalog in databricks
+# Unity Catalog in databricks
 
 ![image](https://github.com/user-attachments/assets/50a81fb7-84a1-4430-8b3c-1b785278b0b2)
 
@@ -10,8 +10,7 @@
 
 -----------------------------------
 
-### Unity catalog data objects
--
+## Unity catalog data objects
 
 ![image](https://github.com/user-attachments/assets/14481e55-367d-4b89-a6c8-abb89f1480ff)
 
