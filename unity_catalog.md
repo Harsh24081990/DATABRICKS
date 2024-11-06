@@ -20,7 +20,7 @@ https://www.youtube.com/watch?v=vwIujIbqEKQ&list=PL6pAXQQpiH-mi8AO5_UDPpOPPjted9
 - **enabling unity catalog on workspaces**
 https://www.youtube.com/watch?v=f6Acij4hPqA&list=PL6pAXQQpiH-mi8AO5_UDPpOPPjted9kCv&index=2
 - **Links and Documentation:**
-ttps://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/get-started
+https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog/get-started
 - **databricks adminstration**
 https://learn.microsoft.com/en-us/azure/databricks/admin/#--establish-your-first-account-admin
 
