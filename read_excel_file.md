@@ -86,8 +86,8 @@ df_sheet2 = spark.read.format("com.crealytics.spark.excel") \
 df_sheet1.show()
 df_sheet2.show()
 ```
-
-### Alternative Approach (Using Pandas with PySpark):
+---------------------------------------------------------
+# Alternative Approach (Using Pandas with PySpark):
 
 If you're looking for a simpler way to load Excel files (especially small files), you can use **Pandas** to read the Excel file and then convert it to a Spark DataFrame.
 
