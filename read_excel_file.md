@@ -1,4 +1,7 @@
+# using spark-excel library
 To read an Excel sheet in **Databricks** using **PySpark**, you'll need to use the `spark-excel` library. This library provides the ability to read Excel files (both `.xls` and `.xlsx` formats) into PySpark DataFrames.
+
+- Note : after installing the spark-excel library in Databricks (or any Spark environment), you do not need to explicitly import the library in your PySpark code. The library is automatically made available once it is installed via Maven.
 
 Here’s how you can do it:
 
