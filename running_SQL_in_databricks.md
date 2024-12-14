@@ -1,4 +1,4 @@
-- For running SQL like syntax on dataframes, we need to first register the dataframe as a temporary view  (using **df.createOrReplaceTempView**) and them we can run normal sql queries on top of that temp view using spark.sql or using magic command %sql
+- For running SQL like syntax on dataframes, we need to first register the dataframe as a temporary view  (using **df.createOrReplaceTempView**) and then we can run normal sql queries on top of that temp view using spark.sql or using magic command %sql
 
 ```python
 # Assume we have a DataFrame 'df' created from some source
