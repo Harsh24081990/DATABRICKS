@@ -1,3 +1,6 @@
+- In Databricks, incremental loading can be implemented using the High Watermark Table concept. The High Watermark approach is a technique where the last processed record’s timestamp or identifier is stored in a separate metadata table (known as the high watermark table). This table tracks the last successfully processed data point, which can then be used to filter out previously processed data and only load the new or modified records during each subsequent run.
+- Anohter way to do incremental loading is directly using the MERGE INTO statements. 
+
 ### Example 1: Incremental Load Based on Timestamp with High Watermark Table
 
 #### Scenario:
