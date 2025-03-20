@@ -57,6 +57,46 @@ query.awaitTermination()
 - **Real-Time Data Ingestion**: Ideal for scenarios where new data files are frequently added and need to be processed in near real-time, such as logs, IoT data, or transactional data.
 - **Batch Processing with Incremental Loads**: Suitable for batch processing workflows that need to handle incremental loads of data efficiently without reprocessing historical data.
 
-### Conclusion
+------------------------------------------------------------------
 
-Auto Loader simplifies and optimizes the process of ingesting data into Databricks, making it easier for data engineers and analysts to build robust data pipelines that keep pace with the dynamic nature of data sources.
+## How autoloader knows whether the data is already processed or not while doing incremental laoding ?
+
+Autoloader in Databricks tracks which files have been processed using **checkpointing**. It records the state of processed files, including their metadata like path, size, and modification time, in a specified checkpoint location. During each run, Autoloader checks this checkpoint to identify and load only new or modified files, ensuring incremental data loading without reprocessing already ingested data. When used with Delta Lake, it also supports deduplication and ensures data consistency through ACID transactions.
+Autoloader ensures idempotent writes by integrating with Delta Lake (if used), which supports ACID transactions and deduplication mechanisms. You can use Delta’s merge capabilities or upsert logic to handle duplicates at the record level if necessary.
+
+```
+df = (spark.readStream
+      .format("cloudFiles")
+      .option("cloudFiles.format", "json")
+      .option("checkpointLocation", "/path/to/checkpoint")
+      .load("/path/to/data"))
+
+df.writeStream
+  .format("delta")
+  .option("checkpointLocation", "/path/to/delta/checkpoint")
+  .start("/delta/target-table")
+```
+
+------------------------------------------------------------------
+
+- Note that when using Auto Loader with automatic schema inference and evolution, the 4 arguments shown here should allow ingestion of most datasets. These arguments are explained below.
+<img width="650" alt="image" src="https://github.com/user-attachments/assets/ee25d4af-ec53-4beb-aab2-3cb704c3be3d" />
+
+
+- Example
+  ```
+  def autoload_to_table(data_source, source_format, table_name, checkpoint_directory):
+    query = (spark.readStream
+                  .format("cloudFiles")
+                  .option("cloudFiles.format", source_format)
+                  .option("cloudFiles.schemaLocation", checkpoint_directory)
+                  .load(data_source)
+                  .writeStream
+                  .option("checkpointLocation", checkpoint_directory)
+                  .option("mergeSchema", "true")
+                  .table(table_name))
+    return query
+  ```
+
+  ----------------------------------------------------------
+
