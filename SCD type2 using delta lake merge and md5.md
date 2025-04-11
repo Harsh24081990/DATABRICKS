@@ -1,12 +1,3 @@
-Absolutely! Here’s the **complete SCD Type 2 implementation using temporary views** in **Databricks SQL**, with:
-
-- ✅ `md5_hash` generated on-the-fly using `md5()`
-- ✅ No need to alter or persist columns — everything is done using **temp views**
-- ✅ Full SCD Type 2 logic:
-  - Expire old records when data changes
-  - Insert new or updated records
-- ✅ Detailed comments to guide you step-by-step
-
 ---
 
 # 🔁 Complete SCD Type 2 using TEMP VIEWS in Databricks
