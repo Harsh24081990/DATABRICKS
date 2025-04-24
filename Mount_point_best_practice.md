@@ -44,16 +44,27 @@ https://<your-keyvault-name>.vault.azure.net/ : This tells Databricks where the 
 - Key Vault Resource ID
 
 
-### 🔹 **2. Give Databricks workspace, Access to Azure Key Vault**
-- Go to your **Key Vault** → **Access Policies**
-	- Click **+ Add Access Policy**
-	- Select **Secret Permissions**: `Get`
-	- Assign principal: Search and select your **Databricks Workspace's Managed Identity** (Ex. my-databricks-ws-name)
+### 🔹 **2. Give Databricks workspace, Access to Azure Key Vault** (For this we can use either "Access Policy" or "IAM" in Key vault)
+- **Option 1** : **Using Key vault Access Policy**
+	- Go to your Key Vault → **Access Policies**
+   	- Click on + Add → **Access Policy**
+	- Select **Secret Permissions**: **`Get`**
+	- **Assign principal**: Search and select your Databricks Workspace's Managed Identity (Ex. my-databricks-ws-name)
 	- Click **Save**
+   
+ - **Option 2** : **Using Key vault Access Control (IAM)**
+	- Go to the Key Vault → **Access control (IAM)**.
+	- Click on + Add → **Add role assignment**.
+	- Choose:
+		○ **Role**: **Key Vault Secrets User**
+		○ **Assign access to**: User, group, or managed identity
+		○ Then select member: Choose your Databricks workspace managed Identity, ADF, or user identity
+		- Click Save.
 
 ##### NOTE : 
 - We register the Databricks app in Entra ID to access ADLS securely.
-- We give our Databricks workspace, access to Azure Key Vault, so it can retrieve that app's credentials in a secure, automated way. 
+- We give our Databricks workspace, access to Azure Key Vault, so it can retrieve that app's credentials in a secure, automated way.
+- Access Policy is a legacy permission model. IAM (RBAC) is the recommended way.
 ---
 
 ## ✅ Step 4: **Create Secret Scope in Databricks**
