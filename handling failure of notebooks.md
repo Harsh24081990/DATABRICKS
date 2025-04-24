@@ -42,4 +42,29 @@ When re-running the pipeline, it reads the LastLoadedTimestamp from the control 
 
 Since data is filtered based on this value, it resumes from where it failed, without reloading all data.
 
+-------------------------------
+
+#### In your PySpark/Databricks notebook, use JDBC to write to your control table:
+```
+from datetime import datetime
+
+# JDBC config
+jdbc_url = "jdbc:sqlserver://<server>.database.windows.net:1433;database=<your_db>"
+connection_properties = {
+    "user": "<username>",
+    "password": "<password>",
+    "driver": "com.microsoft.sqlserver.jdbc.SQLServerDriver"
+}
+
+# Define control row
+data = [
+    ("MyPipeline", "SalesData", datetime.now(), "Success", "/Workspace/Path/Notebook")
+]
+columns = ["PipelineName", "TableName", "LastLoadedTimestamp", "Status", "NotebookPath"]
+
+df = spark.createDataFrame(data, columns)
+
+# Append or overwrite as needed
+df.write.jdbc(url=jdbc_url, table="ControlTable", mode="append", properties=connection_properties)
+```
 
