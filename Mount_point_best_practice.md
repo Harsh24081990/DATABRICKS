@@ -56,7 +56,7 @@ https://<your-keyvault-name>.vault.azure.net/ : This tells Databricks where the 
 	- Go to the Key Vault → **Access control (IAM)**.
 	- Click on + Add → **Add role assignment**.
 	- Choose:
-		○ **Role**: **Key Vault Secrets User**
+		○ **Role**: **`Key Vault Secrets User`**
 		○ **Assign access to**: User, group, or managed identity
 		○ Then select member: Choose your Databricks workspace managed Identity, ADF, or user identity
 		- Click Save.
