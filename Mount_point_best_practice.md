@@ -2,12 +2,12 @@
 [ Note : A Service Principal is the instance of that app created in specific tenant (directory) ]
 
 #### Register App:-
-	- Go to **Microsoft Entra ID** → **App registrations** → Click **+ New registration**
-	- → Give it a name (e.g., `databricks_sp_app`) → Click **Register**
+- Go to **Microsoft Entra ID** → **App registrations** → Click **+ New registration**
+- → Give it a name (e.g., `databricks_sp_app`) → Click **Register**
 
 #### Create Client secret (secret value for app/SP):-
-	- Go to `databricks_sp_app` → **Certificates & secrets** → Click **New client secret**
-	- Save the **secret value** generated in a notepad. 
+- Go to `databricks_sp_app` → **Certificates & secrets** → Click **New client secret**
+- Save the **secret value** generated in a notepad. 
    
 #### Note down the following:-
    - **Application (client) ID** [username] --> This is the unique identifier for your registered app / Service Principal.
