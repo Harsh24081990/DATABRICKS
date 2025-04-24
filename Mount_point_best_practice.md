@@ -1,4 +1,4 @@
-## ✅ Step 1: Register App in **Entra ID** / Create an Azure AD (Entra ID) Service Principal
+## ✅ Step 1: Register App in **Entra ID** → This gives us a Service Principal (SP)
 [ Note : A Service Principal is the instance of that app created in specific tenant (directory) ]
 
 #### Register App:-
