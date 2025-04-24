@@ -16,7 +16,7 @@
 
 ---
 
-## ✅ Step 2: **Assign required Storage Role to App / SP** in IAM of storage account. 
+## ✅ Step 2: **Assign required Storage Role to App / SP** (In IAM of storage account)
 [Assign required Permissions to App or service principal (via IAM) to be able to access ADLS]
 
 1. Go to your **Azure Data Lake Storage** account in the portal.
