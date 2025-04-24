@@ -16,6 +16,7 @@ Status (e.g., Success, Failed, InProgress)
 
 NotebookPath
 
+#### These values are dynamically passed from ADF using parameters, or retrieved/set inside Databricks notebooks via widgets or runtime logic. Nothing is "auto-filled" — you define them as part of your pipeline orchestration.
 
 - 2. Incremental Load Logic
 
