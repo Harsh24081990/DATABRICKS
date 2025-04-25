@@ -73,7 +73,7 @@ https://<your-keyvault-name>.vault.azure.net/ : This tells Databricks where the 
 
 	- Scope name: e.g., my_databricks_secret_scope
 	- Backed by: Azure Key Vault
-	- Provide **`DNS name`** (Vault URI) Vault **`Resource ID`** at the time of scope creation.
+	- Provide **`DNS name`** (Vault URI) and Vault **`Resource ID`** at the time of scope creation.
 
  ![image](https://github.com/user-attachments/assets/88de3d40-d81c-4f46-8e7c-49cfe166a832)
 
