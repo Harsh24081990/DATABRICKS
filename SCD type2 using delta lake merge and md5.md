@@ -22,7 +22,7 @@ FROM TargetTable;
 
 ---
 
-## ✅ STEP 1: Expire old records with changed data
+## ✅ STEP 1: Expire old records for which changed data has come from source. 
 
 ```sql
 -- STEP 1: Update TargetTable records where ID matches but data has changed
