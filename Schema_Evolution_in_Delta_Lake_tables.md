@@ -1,6 +1,4 @@
----
-
-## 🔍 What is **Schema Evolution** in Delta Lake?
+## What is **Schema Evolution** in Delta Lake?
 
 **Schema evolution** means **automatically adapting the table's schema** when new columns or data types appear in your source data.
 
