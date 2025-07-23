@@ -85,3 +85,37 @@ While convenient, schema evolution:
 | **Use case?**         | Useful for SCD Type 2 pipelines when business data grows over time   |
 
 ---
+
+# Schema Evolution Vs Schema Inference
+## (mergeSchema = true Vs inferSchema = true)
+
+🔹 mergeSchema = true
+- Used With: write operations (e.g. df.write.option("mergeSchema", "true")...)
+- Enables schema evolution during write
+- If new columns exist in incoming DataFrame, they are added to the existing Delta table schema
+✅ Use when you want the table schema to adapt automatically during writes (e.g., new columns in new batch)
+
+🔸 inferSchema = true
+- Used With: read operations (e.g. spark.read.option("inferSchema", "true"))
+- Tells Spark to infer the schema from data (e.g., when reading CSV, JSON, etc.)
+- Spark scans some data and guesses data types.
+✅ Use when reading files without predefined schema
+❌ Don’t confuse with schema evolution — This (schema inference) is only during read.
+
+------
+
+# Schema Evolution Vs Schema Enforcement
+
+✅ Schema Evolution
+- Allows table schema to change over time (e.g., add new columns)
+- Enabled using `**mergeSchema = true**` or explicitly via ALTER TABLE
+- Supported in Delta Lake, not in plain Parquet.
+- Use case: Ingesting semi-structured or changing data sources (e.g., event logs)
+
+❌ Schema Enforcement
+- Prevents writing data that does not match the existing schema.
+- Delta Lake will throw an error if columns/types mismatch.
+- Ensures data quality.
+- Use case: Critical production pipelines where schema stability is required.
+
+-----------
