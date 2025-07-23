@@ -119,3 +119,5 @@ While convenient, schema evolution:
 - Use case: Critical production pipelines where schema stability is required.
 
 -----------
+# Note : 
+- Use Explicit Schema Definitions while creating dataframes to avoid costly scanning operations specially in case of large data files. Also, in producion it's recommended to define schema manually rather than being dependent on inferSchema = Ture option. 
