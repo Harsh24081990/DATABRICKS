@@ -86,7 +86,7 @@ While convenient, schema evolution:
 
 ---
 
-# Schema Evolution Vs Schema Inference
+# ⭐ Schema Evolution Vs Schema Inference
 ## (mergeSchema = true Vs inferSchema = true)
 
 🔹 mergeSchema = true
@@ -104,7 +104,7 @@ While convenient, schema evolution:
 
 ------
 
-# Schema Evolution Vs Schema Enforcement
+# ⭐ Schema Evolution Vs Schema Enforcement
 
 ✅ Schema Evolution
 - Allows table schema to change over time (e.g., add new columns)
