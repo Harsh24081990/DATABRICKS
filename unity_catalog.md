@@ -24,6 +24,37 @@ https://learn.microsoft.com/en-us/azure/databricks/data-governance/unity-catalog
 ##### **databricks adminstration**
 https://learn.microsoft.com/en-us/azure/databricks/admin/#--establish-your-first-account-admin
 
+------------------
+### ✅ Unity Catalog – Key Features:
+Unity Catalog in Databricks provides **centralized governance** for data and AI assets. Its **key features** include:
+
+---
+### 🔹 1. **Centralized Metadata Management**
+* Unified catalog across all workspaces
+* Supports tables, views, functions, volumes, ML models, notebooks
+---
+### 🔹 2. **Fine-Grained Access Control**
+* Role-based access (RBAC) at **catalog / schema / table / column** level
+* Supports dynamic data masking and row-level security
+---
+### 🔹 3. **Data Lineage**
+* Automatic tracking of data transformations across notebooks, pipelines
+---
+### 🔹 4. **Audit Logging**
+* Logs access to data for compliance and security audits
+---
+### 🔹 5. **Multi-cloud Support**
+* Works across **Azure, AWS**, and **GCP** with the same governance model
+---
+### 🔹 6. **Native Support for Delta Lake**
+* Full compatibility with Delta Tables and Lakehouse architecture
+---
+### 🔹 7. **Sharing with Delta Sharing**
+* Securely share data across orgs without duplication
+---
+
+
+
 
 
 
