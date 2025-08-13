@@ -36,3 +36,17 @@ Here’s the **10 TB** Databricks (Azure) setup summary (based on `Standard_E32d
 * **Total cluster CPU cores (driver + workers):** 3,232 vCPUs
 
   * **Task-capable cores (executors only):** 3,200 (400 executors × 8 cores)
+
+------
+
+# In general more time is allowd to process all 10 TB of data in 1 day. So we can say following in interview:-
+
+- we generally use standard E series E32 machines (nodes) which have 256 GB RAM and 32 CPU cores.
+- we have such 40 (workder) nodes in our cluster. with autoscaling capacity between 30 to 40 nodes.
+
+If further asked, then we can say:-
+
+- each of the worker nodes have 4 executors running.
+- each executor have 4 cores.
+
+----
