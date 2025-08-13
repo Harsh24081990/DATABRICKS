@@ -91,7 +91,7 @@ Instead, cluster usage depends on **project size, job type, and cost strategy**:
 
 ---
 
-### **Common production patterns**
+# **Common production patterns**
 
 1. **One cluster per pipeline run** (most common for batch ETL)
 
