@@ -120,3 +120,108 @@ Instead, cluster usage depends on **project size, job type, and cost strategy**:
 
 ---
 
+in **ADF settings** you don’t directly specify things like *cores per executor* or *RAM per core*.
+
+### How it works in production:
+
+* **ADF “Databricks Notebook” activity → New job cluster**
+  You only set high-level **cluster specs**:
+
+  * Node type (decides total RAM & cores per node)
+  * Number of workers (or min/max for autoscaling)
+  * Driver node type
+  * Spark version
+  * Optional Spark config overrides
+
+* **Spark parameters** (like executors per node, cores per executor, executor memory)
+  You control these **inside the notebook code** or in the `spark_conf` block of the ADF cluster config JSON.
+
+Example in ADF JSON:
+
+```json
+"spark_conf": {
+    "spark.executor.cores": "8",
+    "spark.executor.memory": "52g",
+    "spark.executor.instances": "400"
+}
+```
+
+*(Above is optional — if you don’t set them, Spark auto-allocates based on node type & number of nodes.)*
+
+---
+
+💡 **So:**
+
+* In ADF UI → you choose **hardware capacity** (node type, count).
+* In Spark config (in ADF JSON or notebook) → you fine-tune **how those resources are divided into executors/cores/memory**.
+
+---
+
+Here’s a **full ADF Databricks job cluster config JSON** for the **10 TB example** we discussed, including all Spark tuning parameters:
+
+```json
+{
+  "name": "Process10TBData",
+  "type": "DatabricksNotebook",
+  "linkedServiceName": {
+    "referenceName": "AzureDatabricksLinkedService",
+    "type": "LinkedServiceReference"
+  },
+  "typeProperties": {
+    "notebookPath": "/ProdJobs/ETL_10TB",
+    "newCluster": {
+      "clusterName": "adf-prod-10tb-cluster",
+      "sparkVersion": "13.3.x-scala2.12",
+      "nodeType": "Standard_E32ds_v5",
+      "driverNodeType": "Standard_E32ds_v5",
+      "autoscale": {
+        "minWorkers": 90,
+        "maxWorkers": 100
+      },
+      "spark_conf": {
+        "spark.executor.cores": "8",
+        "spark.executor.memory": "52g",
+        "spark.executor.instances": "400",
+        "spark.sql.shuffle.partitions": "4000",
+        "spark.dynamicAllocation.enabled": "true",
+        "spark.memory.fraction": "0.8",
+        "spark.sql.adaptive.enabled": "true"
+      },
+      "customTags": {
+        "Project": "ETL-Prod",
+        "Environment": "Production"
+      },
+      "spark_env_vars": {
+        "PYSPARK_PYTHON": "/databricks/python3/bin/python3"
+      },
+      "enableElasticDisk": true
+    },
+    "baseParameters": {
+      "inputPath": "abfss://container@storageaccount.dfs.core.windows.net/input",
+      "outputPath": "abfss://container@storageaccount.dfs.core.windows.net/output"
+    }
+  }
+}
+```
+
+---
+
+### **What this does**
+
+* **Hardware**:
+
+  * 1 driver + 90–100 workers
+  * Each node = 256 GB RAM, 32 vCPUs
+* **Executors**:
+
+  * 4 per worker → 400 total
+  * 8 cores & 52 GB RAM each
+* **Spark tuning**:
+
+  * Adaptive execution enabled
+  * Large shuffle partitions for 10 TB dataset
+  * Memory fraction set to 0.8 for more in-RAM processing
+
+---
+
+
