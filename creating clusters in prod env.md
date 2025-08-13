@@ -204,7 +204,6 @@ Here’s a **full ADF Databricks job cluster config JSON** for the **10 TB examp
 }
 ```
 
----
 
 ### **What this does**
 
