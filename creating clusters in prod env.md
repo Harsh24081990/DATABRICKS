@@ -86,3 +86,37 @@ Here’s an example of an **ADF pipeline JSON snippet** for a Databricks noteboo
 
 ---
 
+In real production projects, you almost never have **only one cluster** for all pipelines.
+Instead, cluster usage depends on **project size, job type, and cost strategy**:
+
+---
+
+### **Common production patterns**
+
+1. **One cluster per pipeline run** (most common for batch ETL)
+
+   * Each ADF pipeline triggers a **job cluster** (new cluster) with specs defined in that pipeline.
+   * After the job completes, the cluster **auto-terminates**.
+   * Pros: Clean, isolated environment; avoids job interference.
+   * Cons: More startup time (\~2–5 mins per run).
+
+2. **Multiple pipelines sharing a pool**
+
+   * Databricks **cluster pools** keep nodes warm.
+   * Job clusters for different pipelines are created **from the same pool**, reducing startup cost/time.
+   * Still one job cluster per pipeline run, but sharing pool resources.
+
+3. **Shared interactive cluster for multiple jobs** (rare in prod, more in dev/test)
+
+   * A single always-running cluster executes many jobs/pipelines.
+   * Used for low-latency streaming jobs or small-scale batch processes.
+   * Cons: Resource contention, risk of job conflicts.
+
+4. **Different cluster configs for different workloads**
+
+   * **Heavy ETL jobs** → large, memory-optimized nodes (e.g., `E32ds_v5`).
+   * **ML jobs** → GPU clusters.
+   * **Small data prep jobs** → smaller, cheaper nodes.
+
+---
+
