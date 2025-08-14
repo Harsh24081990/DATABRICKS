@@ -32,10 +32,9 @@ df = (spark.read.format("jdbc")
     .bucketBy(200, "customer_id")
     .saveAsTable("silver.customers_bucketed"))
 ```
---------
------------------
 
-# Example: Use Bucketing for joining 2 bigger tables to avoid shuffling.
+
+### Example: Use Bucketing for joining 2 bigger tables to avoid shuffling.
 ```
 -- Bucketed Delta table
 CREATE TABLE customers_bucketed
@@ -60,9 +59,7 @@ ON c.customer_id = t.customer_id;
 - Joins must be on exactly the bucketed column(s).
 - Spark still sometimes shuffles if it can’t guarantee bucket alignment (e.g., mergeSchema enabled, extra filters before join).
 - If data is updated frequently, bucketing can be tricky because INSERT/UPDATE/MERGE can break bucket alignment unless you re-bucket during write.
-  
-
-Spark still sometimes shuffles if it can’t guarantee bucket alignment (e.g., mergeSchema enabled, extra filters before join).
+- Spark still sometimes shuffles if it can’t guarantee bucket alignment (e.g., mergeSchema enabled, extra filters before join).
 ------------------------------------
 
 # 2️⃣ Partition Pruning on Join Key (Partitioning)
@@ -152,3 +149,16 @@ df_transactions = (spark.read.format("jdbc")
     .mode("overwrite")
     .saveAsTable("silver.transactions_partitioned"))
 ```
+
+-----------
+# Key difference from partitioning
+
+| Feature               | Partitioning                                                  | Bucketing                                       |
+| --------------------- | ------------------------------------------------------------- | ----------------------------------------------- |
+| **Folder structure**  | One folder per partition value                                | Single folder with multiple bucket files        |
+| **Best for**          | Low–medium cardinality keys                                   | High cardinality keys                           |
+| **Shuffle avoidance** | Only helps if join key = partition key, but may still shuffle | Can fully avoid shuffle if bucketing matches    |
+| **Data skipping**     | Partition pruning (skip folders)                              | No pruning; all buckets scanned unless filtered |
+
+
+### pruning means skipping unnecessary data so the engine doesn’t waste time scanning it.
