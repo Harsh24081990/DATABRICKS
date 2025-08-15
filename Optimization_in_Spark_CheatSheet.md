@@ -33,8 +33,6 @@ You set parameters and Spark automatically applies the optimization at runtime:
 
 Here’s the **Spark Optimization Playbook** showing **effective combinations** of manual + config settings for different workload types:
 
----
-
 ## **1️⃣ Batch ETL (Large Datasets)**
 
 **Goal:** Reduce shuffle, read, and write overhead.
