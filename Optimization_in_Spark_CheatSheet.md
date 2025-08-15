@@ -97,6 +97,47 @@ Here’s the **Spark Optimization Playbook** showing **effective combinations** 
 
 ---
 
+In Spark (including Databricks), configs can be set in **3 main places** depending on when and how you want them applied:
+
+---
+
+### **1️⃣ At Cluster Level (Databricks UI) – Persistent for All Jobs**
+
+* Go to **Cluster → Configuration → Advanced Options → Spark Config**
+* Add configs as key-value pairs:
+
+  ```
+  spark.sql.shuffle.partitions=200
+  spark.sql.adaptive.enabled=true
+  spark.sql.autoBroadcastJoinThreshold=104857600
+  ```
+* **When to use:** For settings you want on **all notebooks and jobs** running on that cluster.
+
+---
+
+### **2️⃣ Inside Notebook / Job Code – Session-specific**
+
+* Set configs in code before your logic:
+
+  ```python
+  spark.conf.set("spark.sql.shuffle.partitions", 200)
+  spark.conf.set("spark.sql.adaptive.enabled", "true")
+  ```
+* **When to use:** For tuning a specific job/notebook without changing the whole cluster.
+
+---
+
+### **3️⃣ In Job Cluster JSON (Databricks Jobs API / UI)** Ex. Running from ADF Pipelines.
+
+* If running from a **Databricks Job** (not interactive cluster), you can set configs in the job’s **Cluster JSON** under `"spark_conf"`.
+
+  ```json
+  "spark_conf": {
+    "spark.sql.shuffle.partitions": "200",
+    "spark.sql.adaptive.enabled": "true"
+  }
+  ```
+* **When to use:** For scheduled production jobs needing dedicated settings
 
 
 
