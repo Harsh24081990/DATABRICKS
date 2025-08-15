@@ -42,7 +42,7 @@ Here’s the **10 TB** Databricks (Azure) setup summary (based on `Standard_E32d
 # In general more time is allowd to process all 10 TB of data in 1 day. So we can say following in interview:-
 
 - we generally use standard E series E32 machines (nodes) which have 256 GB RAM and 32 CPU cores.
-- we have such 40 (workder) nodes in our cluster. with autoscaling capacity between 30 to 40 nodes.
+- we have such 40 (workder) nodes in our cluster. with **autoscaling** capacity between 30 to 40 nodes.
 
 If further asked, then we can say:-
 
@@ -50,3 +50,8 @@ If further asked, then we can say:-
 - each executor have 4 cores.
 
 ----
+
+### Creating cluster for prod setup:-
+https://github.com/Harsh24081990/DATABRICKS/blob/main/creating%20clusters%20in%20prod%20env.md
+
+---
