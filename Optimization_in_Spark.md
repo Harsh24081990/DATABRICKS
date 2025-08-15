@@ -1,3 +1,4 @@
+# Code level optimization :-
 
 - Partitioning
 - Bucketing
@@ -52,3 +53,37 @@ Sort Merge Join in Spark does not mandatorily require partitioned tables.
 Partitioning just makes it more efficient because data for the same join key is already colocated, reducing shuffle.
 
 -----------------
+
+# Configuration level optimization :-
+
+# Broadcast join threshold (in bytes) – default 10MB
+spark.conf.set("spark.sql.autoBroadcastJoinThreshold", 10485760)
+
+# Number of shuffle partitions (affects joins, aggregations, etc.)
+spark.conf.set("spark.sql.shuffle.partitions", 200)
+
+# Prefer Sort Merge Join over Shuffle Hash Join
+spark.conf.set("spark.sql.join.preferSortMergeJoin", True)
+
+# Max partition size for reading files (in bytes) – default 128MB
+spark.conf.set("spark.sql.files.maxPartitionBytes", 134217728)
+
+# Enable Adaptive Query Execution (AQE)
+spark.conf.set("spark.sql.adaptive.enabled", True)
+
+# Enable skew join handling under AQE
+spark.conf.set("spark.sql.adaptive.skewJoin.enabled", True)
+
+# Enable Delta optimize write
+spark.conf.set("spark.databricks.delta.optimizeWrite.enabled", True)
+
+# Enable Delta auto compaction
+spark.conf.set("spark.databricks.delta.autoCompact.enabled", True)
+
+# Ignore corrupt files
+spark.conf.set("spark.sql.files.ignoreCorruptFiles", True)
+
+# Ignore missing files
+spark.conf.set("spark.sql.files.ignoreMissingFiles", True)
+
+------------
