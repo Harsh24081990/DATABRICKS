@@ -108,4 +108,5 @@ df.checkpoint(eager=True)  # eager=True forces immediate checkpointing
 - Ignore missing files
   
 ```spark.conf.set("spark.sql.files.ignoreMissingFiles", True)```
+
 ------------
