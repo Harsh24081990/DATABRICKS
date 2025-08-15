@@ -31,17 +31,74 @@ You set parameters and Spark automatically applies the optimization at runtime:
 
 ---
 
-Here’s the **Spark Optimization Quick Reference Sheet** you can keep:
+Here’s the **Spark Optimization Playbook** showing **effective combinations** of manual + config settings for different workload types:
 
 ---
 
-| **Workload Type**                      | **Manual Actions**                                                                               | **Config Settings**                                                                                                                                                                          |
-| -------------------------------------- | ------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Batch ETL (Large Datasets)**         | Partitioning (by filter col), ZORDER (Delta), OPTIMIZE after load, Repartition before write      | `spark.sql.shuffle.partitions` (\~2–3× cores), `spark.databricks.delta.optimizeWrite.enabled=true`                                                                                           |
-| **Joins (Large-Large / Large-Small)**  | Broadcast join (small side), Bucketing on join col (recurring joins), Ensure sorted data for SMJ | `spark.sql.autoBroadcastJoinThreshold` (increase if memory allows), `spark.sql.adaptive.enabled=true`, `spark.sql.adaptive.skewJoin.enabled=true`, `spark.sql.join.preferSortMergeJoin=true` |
-| **Streaming Pipelines**                | Checkpointing, Repartition for balanced batches, Cache() only if reused, Watermarking            | `spark.sql.shuffle.partitions` (lower for small batches)                                                                                                                                     |
-| **Heavy Analytics / Repeated Queries** | Cache/Persist intermediate results, OPTIMIZE + ZORDER for query speed                            | `spark.sql.adaptive.enabled=true`, `spark.sql.files.maxPartitionBytes` (tune for scan parallelism)                                                                                           |
-| **Small File Problem Fix**             | Repartition before write, OPTIMIZE after load                                                    | `spark.databricks.delta.autoCompact.enabled=true`, `spark.databricks.delta.optimizeWrite.enabled=true`                                                                                       |
+## **1️⃣ Batch ETL (Large Datasets)**
+
+**Goal:** Reduce shuffle, read, and write overhead.
+**Best Combo:**
+
+* **Partitioning** (by high-cardinality filter column)
+* **ZORDER** (if using Delta) for multi-column filter skipping
+* **OPTIMIZE** (Databricks) after bulk loads
+* **Repartition()** to control file sizes before write
+* **spark.sql.shuffle.partitions** tuned (e.g., \~2–3× total cores)
+* **spark.databricks.delta.optimizeWrite.enabled = true** (auto file sizing)
 
 ---
+
+## **2️⃣ Joins (Large-Large / Large-Small)**
+
+**Goal:** Avoid shuffle explosion and skew.
+**Best Combo:**
+
+* **Broadcast Join** (manual) for small table joins
+* **spark.sql.autoBroadcastJoinThreshold** adjusted (higher if memory allows)
+* **Bucketing** both sides (same column & buckets) for recurring joins
+* **spark.sql.adaptive.enabled = true** + **spark.sql.adaptive.skewJoin.enabled = true**
+* **Prefer Sort Merge Join** (`spark.sql.join.preferSortMergeJoin=true`) for large-large joins when sorted
+
+---
+
+## **3️⃣ Streaming Pipelines**
+
+**Goal:** Low latency, avoid state store bloat.
+**Best Combo:**
+
+* **Checkpointing** for recovery & lineage trimming
+* **Repartition()** for balanced micro-batches
+* **spark.sql.shuffle.partitions** tuned small for low latency
+* **Cache()** only if same DF reused in multiple queries
+* **Watermarking** (for late data handling)
+
+---
+
+## **4️⃣ Heavy Analytics / Repeated Queries**
+
+**Goal:** Reuse results, avoid recomputation.
+**Best Combo:**
+
+* **Cache() / Persist()** frequently accessed intermediate tables
+* **OPTIMIZE** + **ZORDER** for query acceleration on multiple filter cols
+* **spark.sql.adaptive.enabled** for runtime plan tuning
+* **spark.sql.files.maxPartitionBytes** tuned for scan parallelism
+
+---
+
+## **5️⃣ Small File Problem Fix**
+
+**Goal:** Reduce metadata overhead and improve read speed.
+**Best Combo:**
+
+* **Repartition()** before write to target fewer, larger files
+* **OPTIMIZE** post-load
+* **spark.databricks.delta.autoCompact.enabled = true**
+* **spark.databricks.delta.optimizeWrite.enabled = true**
+
+---
+
+
+
 
