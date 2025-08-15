@@ -54,6 +54,20 @@ Partitioning just makes it more efficient because data for the same join key is 
 
 -----------------
 
+### Checkpoint:-
+- Checkpoint in Spark → Saves the DataFrame/RDD to a reliable storage (like DBFS, HDFS, S3) and removes its lineage/DAG (execution history).
+- Breaks long dependency chains to avoid recomputation.
+- Useful to avoid “StackOverflowError” / data spill errors in very long lineage graphs.
+- checkpointing can help fix OutOfMemory errors on the driver, not on executors, because Driver OOM sometime happens when Spark maintains long RDD lineage in memory for iterative jobs.
+  
+```
+spark.sparkContext.setCheckpointDir("/mnt/checkpoints")
+df.checkpoint(eager=True)  # eager=True forces immediate checkpointing
+```
+- It’s different from cache—cache keeps data in memory, checkpoint stores to disk and clears lineage.
+
+-------------------------------
+
 # Configuration level optimization :-
 - Broadcast join threshold (in bytes) – default 10MB
   
