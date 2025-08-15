@@ -57,6 +57,7 @@ Partitioning just makes it more efficient because data for the same join key is 
 # Configuration level optimization :-
 
 - Broadcast join threshold (in bytes) – default 10MB
+  
 ```spark.conf.set("spark.sql.autoBroadcastJoinThreshold", 10485760)```
 
 - Number of shuffle partitions (affects joins, aggregations, etc.)
